@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文章详情 · 行走手账</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="icon">🧭</span>行走<em>手账</em></a>
+      <nav class="nav-links">
+        <a href="index.html">文章</a>
+        <a href="tags.html">标签</a>
+        <a href="about.html">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article-wrap">
+    <a class="back-link" href="index.html">← 返回文章列表</a>
+    <header class="article-header">
+      <div class="post-meta" id="postMeta"></div>
+      <h1 id="postTitle"></h1>
+      <div id="postTags"></div>
+    </header>
+    <div class="markdown-body" id="postContent"></div>
+    <footer class="article-footer">
+      <a class="next-link" href="tags.html">🏷️ 浏览全部标签</a>
+      <a class="next-link" href="index.html">📖 更多文章 →</a>
+    </footer>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>🧭 行走手账 · 把每一段路都走成学问</p>
+      <p>© 2026 <a href="about.html">关于我</a> · Powered by Markdown &amp; ❤️</p>
+    </div>
+  </footer>
+
+  <script src="assets/marked.min.js"></script>
+  <script src="assets/posts.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    const post = POSTS.find(p => p.id === id);
+
+    if (!post) {
+      document.getElementById("postTitle").textContent = "404 · 没有找到这篇文章";
+      document.getElementById("postContent").innerHTML =
+        `<p>你访问的文章不存在或已被移除。<a href="index.html">回到首页看看其他文章 →</a></p>`;
+    } else {
+      document.title = post.title + " · 行走手账";
+      document.getElementById("postMeta").innerHTML =
+        `<span>📅 ${post.date}</span><span>·</span><span>⏱️ ${post.readTime} 分钟阅读</span>`;
+      document.getElementById("postTitle").textContent = post.title;
+      document.getElementById("postTags").innerHTML =
+        post.tags.map(t => `<a class="tag" href="tags.html?tag=${encodeURIComponent(t)}">${t}</a>`).join(" ");
+      document.getElementById("postContent").innerHTML = marked.parse(post.content.trim());
+    }
+  </script>
+</body>
+</html>
