@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>标签分类 · 行走手账</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="icon">🧭</span>行走<em>手账</em></a>
+      <nav class="nav-links">
+        <a href="index.html">文章</a>
+        <a href="tags.html" class="active">标签</a>
+        <a href="about.html">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title">标签云</h2>
+    <div class="tag-cloud" id="tagCloud"></div>
+    <h2 class="section-title" id="resultTitle">全部文章</h2>
+    <div class="post-list" id="postList"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>🧭 行走手账 · 把每一段路都走成学问</p>
+      <p>© 2026 <a href="about.html">关于我</a> · Powered by Markdown &amp; ❤️</p>
+    </div>
+  </footer>
+
+  <script src="assets/posts.js"></script>
+  <script>
+    const postList = document.getElementById("postList");
+    const tagCloud = document.getElementById("tagCloud");
+    const resultTitle = document.getElementById("resultTitle");
+    let activeTag = new URLSearchParams(location.search).get("tag");
+
+    function renderCloud() {
+      const counts = {};
+      POSTS.forEach(p => p.tags.forEach(t => counts[t] = (counts[t] || 0) + 1));
+      tagCloud.innerHTML =
+        `<a class="tag" data-tag="" style="cursor:pointer">全部 (${POSTS.length})</a>` +
+        Object.keys(counts).sort().map(t =>
+          `<a class="tag" data-tag="${t}" style="cursor:pointer">${t} · ${counts[t]}</a>`
+        ).join("");
+      tagCloud.querySelectorAll(".tag").forEach(el => {
+        const t = el.dataset.tag;
+        if ((activeTag || "") === t) el.style.cssText += ";background:var(--accent);color:#0e1412;";
+      });
+    }
+
+    function renderList() {
+      const list = POSTS
+        .filter(p => !activeTag || p.tags.includes(activeTag))
+        .sort((a, b) => b.date.localeCompare(a.date));
+      resultTitle.textContent = activeTag ? `标签「${activeTag}」下的文章` : "全部文章";
+      const icons = ["🧭", "📖", "⚖️", "🗺️", "🎤", "📈", "🚩", "🏔️"];
+      postList.innerHTML = list.length
+        ? list.map((p, i) => `
+          <article class="post-card">
+            <div class="cover">${icons[i % icons.length]}</div>
+            <h3><a href="post.html?id=${p.id}">${p.title}</a></h3>
+            <p class="excerpt">${p.excerpt}</p>
+            <div class="post-meta">
+              <span>${p.date}</span><span>·</span><span>${p.readTime} 分钟阅读</span>
+            </div>
+            <div>${p.tags.map(t => `<a class="tag" href="tags.html?tag=${encodeURIComponent(t)}">${t}</a>`).join(" ")}</div>
+          </article>`).join("")
+        : `<p class="empty-tip">该标签下暂无文章 🍃</p>`;
+    }
+
+    tagCloud.addEventListener("click", e => {
+      const el = e.target.closest(".tag");
+      if (!el) return;
+      activeTag = el.dataset.tag || null;
+      history.replaceState(null, "", activeTag ? `?tag=${encodeURIComponent(activeTag)}` : "?");
+      renderCloud(); renderList();
+    });
+
+    renderCloud(); renderList();
+  </script>
+</body>
+</html>
