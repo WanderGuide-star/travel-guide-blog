@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>行走的手账 · 导游考试备考记</title>
+  <meta name="description" content="记录我的导游资格考试备考全过程：考点笔记、刷题数据、口试攻略与真实复盘。" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="icon">🧭</span>行走<em>手账</em></a>
+      <nav class="nav-links">
+        <a href="index.html" class="active">文章</a>
+        <a href="tags.html">标签</a>
+        <a href="about.html">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>一边备考导游，<em>一边把路走成学问</em></h1>
+      <p>这里记录我备战导游资格考试的全过程：笔试四科的考点笔记、模考分数曲线、口试导游词练习心得，以及考完之后的真实复盘。备考路上，一起走。</p>
+      <div class="meta-row">
+        <span class="chip">📝 持续更新备考记录</span>
+        <span class="chip">📊 真实模考数据</span>
+        <span class="chip">🎤 口试实战心得</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <h2 class="section-title">全部文章</h2>
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="post-list" id="postList"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>🧭 行走手账 · 把每一段路都走成学问</p>
+      <p>© 2026 <a href="about.html">关于我</a> · Powered by Markdown &amp; ❤️</p>
+    </div>
+  </footer>
+
+  <script src="assets/posts.js"></script>
+  <script>
+    const allTags = [...new Set(POSTS.flatMap(p => p.tags))];
+    const filterBar = document.getElementById("filterBar");
+    const postList = document.getElementById("postList");
+    let activeTag = null;
+
+    function tagCounts() {
+      const m = {};
+      POSTS.forEach(p => p.tags.forEach(t => m[t] = (m[t] || 0) + 1));
+      return m;
+    }
+
+    function renderFilter() {
+      const counts = tagCounts();
+      filterBar.innerHTML =
+        `<button class="filter-btn ${!activeTag ? "active" : ""}" data-tag="">全部 (${POSTS.length})</button>` +
+        allTags.map(t =>
+          `<button class="filter-btn ${activeTag === t ? "active" : ""}" data-tag="${t}">${t} (${counts[t] || 0})</button>`
+        ).join("");
+    }
+
+    function renderList() {
+      const list = POSTS
+        .filter(p => !activeTag || p.tags.includes(activeTag))
+        .sort((a, b) => b.date.localeCompare(a.date));
+      const icons = ["🧭", "📖", "⚖️", "🗺️", "🎤", "📈", "🚩", "🏔️"];
+      postList.innerHTML = list.length
+        ? list.map((p, i) => `
+          <article class="post-card">
+            <div class="cover">${icons[i % icons.length]}</div>
+            <h3><a href="post.html?id=${p.id}">${p.title}</a></h3>
+            <p class="excerpt">${p.excerpt}</p>
+            <div class="post-meta">
+              <span>${p.date}</span><span>·</span><span>${p.readTime} 分钟阅读</span>
+            </div>
+            <div>${p.tags.map(t => `<a class="tag" href="tags.html?tag=${encodeURIComponent(t)}">${t}</a>`).join(" ")}</div>
+          </article>`).join("")
+        : `<p class="empty-tip">该分类下暂无文章 🍃</p>`;
+    }
+
+    filterBar.addEventListener("click", e => {
+      const btn = e.target.closest(".filter-btn");
+      if (!btn) return;
+      activeTag = btn.dataset.tag || null;
+      renderFilter(); renderList();
+    });
+
+    renderFilter(); renderList();
+  </script>
+</body>
+</html>
