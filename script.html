@@ -45,6 +45,41 @@
       margin-top: 34px; padding: 16px 18px; border: 1px solid var(--border);
       border-radius: 10px; color: var(--text-dim); font-size: 14px;
     }
+    /* 速记版 */
+    .chain {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+      gap: 8px; margin: 8px 0 10px; padding: 18px 14px;
+      background: linear-gradient(135deg, rgba(53,201,142,.10), rgba(53,201,142,.02));
+      border: 1px solid var(--border); border-radius: 12px;
+    }
+    .chain b {
+      width: 38px; height: 38px; line-height: 38px; text-align: center;
+      border-radius: 50%; background: var(--accent); color: #0e1412;
+      font-size: 17px; font-weight: 800;
+    }
+    .chain i { color: var(--text-dim); font-style: normal; font-size: 13px; }
+    .chain-sub {
+      flex: 1 0 100%; text-align: center; color: var(--text-dim);
+      font-size: 13px; margin-top: 10px; letter-spacing: .3px;
+    }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0 8px; }
+    .table-scroll table { min-width: 640px; }
+    .table-scroll td, .table-scroll th { font-size: 13.5px; line-height: 1.8; }
+    .mini-title { font-size: 17px; margin: 30px 0 10px; color: var(--accent); }
+    .gold-list { margin: 8px 0 4px; padding-left: 24px; }
+    .gold-list li { font-size: 16px; line-height: 1.9; margin: 7px 0; color: #dbe6de; }
+    .gold-list li::marker { color: var(--accent); font-weight: 700; }
+    .gold-list strong { color: var(--accent); }
+    .quick-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px; margin: 22px 0 6px;
+    }
+    .qbox {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px; font-size: 14.5px; line-height: 1.9;
+    }
+    .qbox h4 { margin: 0 0 8px; font-size: 14px; color: var(--accent); letter-spacing: .5px; }
+    .qbox em { font-style: normal; color: var(--text-dim); }
     @media print {
       body { background: #fff; color: #111; }
       .site-header, .site-footer, .print-hide { display: none !important; }
@@ -57,6 +92,14 @@
       .pause { color: #b3261e; }
       .sec { page-break-inside: avoid; }
       .ver-title { page-break-before: always; }
+      .chain { border-color: #ccc; background: #f7f7f7; }
+      .chain b { background: #146c4b; color: #fff; }
+      .gold-list strong, .gold-list li::marker, .mini-title { color: #146c4b; }
+      .gold-list li { color: #111; }
+      .qbox { border-color: #ccc; }
+      .table-scroll { overflow: visible; }
+      .table-scroll table { min-width: 0; }
+      .quick-grid { page-break-inside: avoid; }
     }
   </style>
 </head>
@@ -76,12 +119,67 @@
   <main class="script-wrap">
     <a class="back-link print-hide" href="index.html">← 返回文章列表</a>
     <h1 style="margin-top:16px;">黑山谷导游词</h1>
-    <p class="script-sub">一山分渝黔 · 一谷藏山水 · 一溪传千年｜6 分钟竞赛版 + 7 分钟标准版</p>
+    <p class="script-sub">一山分渝黔 · 一谷藏山水 · 一溪传千年｜速记版 + 6 分钟竞赛版 + 7 分钟标准版</p>
 
     <div class="legend print-hide">
       <b>标记说明</b>　<span class="pause">/</span> 短停约半秒（换气）　<span class="pause">//</span> 长停 1–2 秒（等反应）　
       <span class="gold">绿色下划线</span>＝金句，语速放慢、看评委　｜　灰色方框为动作提示，不念出<br>
       <b>打印提示</b>　按 Ctrl/Cmd + P，或浏览器菜单「打印」，会自动隐藏导航与页脚。
+    </div>
+
+    <!-- 速记版 -->
+    <h2 class="ver-title" id="quick">速记版 · 骨架 + 金句</h2>
+    <p class="ver-sub">背这一页就能串起全文：口诀 → 八段骨架 → 9 句金句 → 4 个数字 → 卡壳急救</p>
+
+    <div class="chain">
+      <b>城</b><i>→</i><b>谷</b><i>→</i><b>名</b><i>→</i><b>人</b><i>→</i><b>石</b><i>→</i><b>海</b><i>→</i><b>凉</b>
+      <div class="chain-sub">重庆 → 黑山谷 → 为何叫黑 → 夜郎传说 → 万马奔腾 → 震旦角石 → 收尾</div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <tr><th>段</th><th>起手第一句（最易卡壳处）</th><th>必须出现的点</th><th>收口金句</th></tr>
+        <tr><td>① 开场</td><td>来重庆，大家会问三个问题</td><td>火锅辣不辣 / 导航准不准 / 夏天往哪儿躲 → 落「黑山谷」</td><td>—</td></tr>
+        <tr><td>② 重庆概况</td><td>重庆不是建在山上的城</td><td>8D 魔幻 / 雾都桥都两江 / 白天烟火、夜里灯火</td><td>②</td></tr>
+        <tr><td>③ 黑山谷概况</td><td>往南一个半小时到万盛</td><td>界山 · 5A / 13 公里 · 97% · 2000 种 / 常年 22 度</td><td>③</td></tr>
+        <tr><td>④ 名字悬念</td><td>很多人以为这里阴森昏暗</td><td>停两秒 → 树太密 / 天光碎金 / 绿到发黑</td><td>④</td></tr>
+        <tr><td>⑤ 夜郎传说</td><td>最动人的不是山水，是一段旧事</td><td>孟勒带族人 / 遇见阿彩 / 追兵 → 双双殉谷</td><td>⑤ ⑥</td></tr>
+        <tr><td>⑥ 万马奔腾</td><td>说完故事，看石头</td><td>石林之祖 · 龙鳞石海 / 剑状石林 / 退半步看整体</td><td>⑦</td></tr>
+        <tr><td>⑦ 震旦角石</td><td>石头里还藏着更老的故事</td><td>角石怎么认 / 宝塔春笋形 / 1.2 米</td><td>⑧</td></tr>
+        <tr><td>⑧ 收尾</td><td>13 公里走下来</td><td>22 度 / 避暑第一名</td><td>⑨</td></tr>
+      </table>
+    </div>
+
+    <h3 class="mini-title">九句金句（按出场顺序，背这 9 句就撑得住全场）</h3>
+    <ol class="gold-list">
+      <li>重庆不是建在山上的城，<strong>是从山里长出来的城</strong></li>
+      <li>这座城的热，<strong>一半在锅里，一半在人心里</strong></li>
+      <li><strong>山把两个省分开，谷把两种气候合在一起</strong></li>
+      <li><strong>黑山谷的黑，是把光留给了树，把凉留给了人</strong></li>
+      <li><strong>你在哪儿，家就在哪儿</strong><em>（公主台词，最催泪）</em></li>
+      <li><strong>石头会老，故事不会</strong></li>
+      <li><strong>喀斯特不说话，只把时间刻在石头上</strong></li>
+      <li><strong>四亿年前这里是海底，今天你站在山上</strong></li>
+      <li><strong>最好的风景不在相机里，在你停下来那一秒</strong></li>
+    </ol>
+
+    <div class="quick-grid">
+      <div class="qbox">
+        <h4>数字只记 4 个</h4>
+        13 公里 · 97% · 2000 种 · 1.2 米<br>
+        <em>另加：常年 22 度、国家 5A 级</em>
+      </div>
+      <div class="qbox">
+        <h4>卡壳急救三句</h4>
+        「大家再看一眼脚下——风景就在这个细节里。」<br>
+        「说到这儿，我更想讲讲这里的人。」<br>
+        「好，故事先放一放，去看眼前这块石头。」
+      </div>
+      <div class="qbox">
+        <h4>时间锚点（6 分钟）</h4>
+        0:30 城讲完 → 2:15 名字讲完 → 4:10 传说讲完 → 5:15 石林讲完 → 6:00 收<br>
+        <em>四个锚点不偏，整篇就不会超时</em>
+      </div>
     </div>
 
     <!-- 6 分钟版 -->
